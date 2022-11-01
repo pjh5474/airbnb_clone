@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from common.models import CommonModel
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 class Room(CommonModel):
@@ -24,7 +25,7 @@ class Room(CommonModel):
         max_length=80,
         default="서울",
     )
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(validators=[MinValueValidator(0)])
     rooms = models.PositiveIntegerField()
     toilets = models.PositiveIntegerField()
     description = models.TextField()
@@ -74,7 +75,7 @@ class Room(CommonModel):
                 total_rating += review[
                     "rating"
                 ]  # 딕셔너리 형태로 반환되기 때문에 review["rating"]으로 접근
-                return round(total_rating / count, 2)  # round는 소수점 자리수를 지정할 수 있음
+            return round(total_rating / count, 2)  # round는 소수점 자리수를 지정할 수 있음
 
 
 class Amenity(CommonModel):
